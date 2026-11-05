@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#070014" />
+  <title>Neon Rush — Endless Runner</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070014'/%3E%3Cpath d='M12 46 26 18h12L24 46zm18 0 14-28h8L38 46z' fill='%2339f6ff'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main id="app" data-state="menu">
+    <canvas id="scene" aria-label="Neon Rush 3D endless runner"></canvas>
+
+    <div class="fx fx-vignette" aria-hidden="true"></div>
+    <div class="fx fx-scanlines" aria-hidden="true"></div>
+    <div class="fx fx-speed" aria-hidden="true"></div>
+    <div class="fx fx-flash" aria-hidden="true"></div>
+
+    <div class="top-edge" aria-hidden="true"></div>
+
+    <header class="hud" id="hud">
+      <div class="hud-left">
+        <div class="mini-brand">
+          <span class="mini-brand-mark"></span>
+          <span>NEON&nbsp;RUSH</span>
+        </div>
+        <div class="distance">
+          <span id="distanceValue">0</span><em>M</em>
+          <small>DISTANCE</small>
+        </div>
+      </div>
+
+      <div class="hud-right">
+        <div class="hud-buttons">
+          <button class="icon-btn" id="soundBtn" type="button" aria-label="Mute sound" title="Sound (M)">
+            <svg class="icon-on" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 9.5h3.4L12 5.6a.8.8 0 0 1 1.3.6v11.6a.8.8 0 0 1-1.3.6L7.4 14.5H4a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1Z" fill="currentColor"/>
+              <path d="M16.2 8.3a5.2 5.2 0 0 1 0 7.4M18.7 5.8a8.8 8.8 0 0 1 0 12.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+            </svg>
+            <svg class="icon-off" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 9.5h3.4L12 5.6a.8.8 0 0 1 1.3.6v11.6a.8.8 0 0 1-1.3.6L7.4 14.5H4a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1Z" fill="currentColor"/>
+              <path d="m16.4 9.4 4.8 5.2m0-5.2-4.8 5.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="icon-btn" id="pauseBtn" type="button" aria-label="Pause game" title="Pause (P)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5" width="3.7" height="14" rx="1.2" fill="currentColor"/><rect x="13.8" y="5" width="3.7" height="14" rx="1.2" fill="currentColor"/></svg>
+          </button>
+        </div>
+
+        <div class="coin-pill" id="coinPill">
+          <span class="coin-icon" aria-hidden="true"></span>
+          <span id="coinValue">0</span>
+          <small>COINS</small>
+        </div>
+
+        <div class="speed-panel">
+          <div class="speed-top"><span>SPEED</span><span id="speedValue">29</span><em>KM/H</em></div>
+          <div class="speed-track"><i id="speedBar"></i></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="coin-toast" id="coinToast" aria-hidden="true">+1</div>
+
+    <div class="go-burst" id="goBurst" aria-hidden="true"><span>GO!</span></div>
+
+    <nav class="touch-controls" id="touchControls" aria-label="Touch controls">
+      <button class="touch-btn" data-action="left" type="button" aria-label="Move left">
+        <svg viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="touch-btn touch-btn-jump" data-action="jump" type="button" aria-label="Jump">
+        <svg viewBox="0 0 24 24"><path d="m5 14.5 7-7 7 7M12 8v11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="touch-btn touch-btn-slide" data-action="slide" type="button" aria-label="Slide">
+        <svg viewBox="0 0 24 24"><path d="m5 9.5 7 7 7-7M12 17V6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="touch-btn" data-action="right" type="button" aria-label="Move right">
+        <svg viewBox="0 0 24 24"><path d="m9.5 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </nav>
+
+    <section class="screen menu-screen" id="menuScreen">
+      <div class="menu-deco menu-deco-left" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="menu-deco menu-deco-right" aria-hidden="true"><span></span><span></span><span></span></div>
+
+      <div class="menu-content">
+        <div class="eyebrow"><i></i> NIGHT CITY // SECTOR 09 <i></i></div>
+        <h1 class="logo" aria-label="Neon Rush">
+          <span class="logo-neon">NEON</span>
+          <span class="logo-rush">RUSH</span>
+          <span class="logo-shadow" aria-hidden="true">NEON<br>RUSH</span>
+        </h1>
+        <p class="tagline">Outrun the grid. <strong>Own the night.</strong></p>
+
+        <div class="menu-stats">
+          <div><small>BEST SCORE</small><b id="menuBest">0</b></div>
+          <div class="menu-stat-divider"></div>
+          <div><small>TOP DISTANCE</small><b id="menuDistance">0<em>m</em></b></div>
+        </div>
+
+        <button class="btn btn-primary btn-play" id="playBtn" type="button">
+          <span class="btn-shine" aria-hidden="true"></span>
+          <span class="play-icon" aria-hidden="true"></span>
+          <span>Play</span>
+        </button>
+
+        <div class="control-strip">
+          <div class="control-item desktop-only"><kbd>◀</kbd><kbd>▶</kbd><span>Switch lane</span></div>
+          <div class="control-item desktop-only"><kbd class="wide">SPACE</kbd><span>Jump</span></div>
+          <div class="control-item desktop-only"><kbd>▼</kbd><span>Slide</span></div>
+          <div class="control-item touch-only"><span class="swipe-glyph">↔</span><span>Swipe to switch</span></div>
+          <div class="control-item touch-only"><span class="swipe-glyph">↕</span><span>Swipe up / down</span></div>
+        </div>
+        <p class="assumption-note">3 lanes · endless city · one more run</p>
+      </div>
+
+      <div class="menu-footer">
+        <span>© 2086 NEON RUSH</span>
+        <span class="footer-mid">SYNTHWAVE ENDLESS RUNNER</span>
+        <span>A / D · SPACE · S</span>
+      </div>
+    </section>
+
+    <section class="screen result-screen is-hidden" id="gameoverScreen" aria-hidden="true">
+      <div class="result-panel">
+        <div class="result-kicker">RUN TERMINATED</div>
+        <h2 class="result-title">SIGNAL <span>LOST</span></h2>
+        <p class="result-sub" id="resultQuip">The city always wins the first round.</p>
+
+        <div class="result-score-wrap">
+          <small>FINAL SCORE</small>
+          <div class="result-score" id="finalScore">0</div>
+          <div class="result-best" id="newBest" hidden><i></i> NEW PERSONAL BEST <i></i></div>
+        </div>
+
+        <div class="result-grid">
+          <div><small>DISTANCE</small><b id="finalDistance">0<em>m</em></b></div>
+          <div><small>COINS</small><b class="gold" id="finalCoins">0</b></div>
+          <div><small>TOP SPEED</small><b id="finalSpeed">0<em>km/h</em></b></div>
+        </div>
+
+        <div class="result-actions">
+          <button class="btn btn-primary" id="retryBtn" type="button">
+            <span class="btn-shine" aria-hidden="true"></span>
+            <span class="retry-icon" aria-hidden="true"></span>
+            <span>Run Again</span>
+          </button>
+          <button class="btn btn-ghost" id="homeBtn" type="button">Menu</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen pause-screen is-hidden" id="pauseScreen" aria-hidden="true">
+      <div class="pause-panel">
+        <div class="result-kicker">SYSTEM HOLD</div>
+        <h2 class="pause-title">PAUSED</h2>
+        <p>Take a breath. The grid can wait.</p>
+        <div class="result-actions">
+          <button class="btn btn-primary" id="resumeBtn" type="button"><span class="play-icon" aria-hidden="true"></span><span>Resume</span></button>
+          <button class="btn btn-ghost" id="quitBtn" type="button">End Run</button>
+        </div>
+        <div class="pause-keys desktop-only">Press <kbd>P</kbd> to resume</div>
+      </div>
+    </section>
+
+    <div class="rotate-hint" id="rotateHint" aria-hidden="true">
+      <span class="rotate-phone"></span>
+      <b>Rotate for a wider view</b>
+    </div>
+  </main>
+
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three.module.js" } }
+  </script>
+  <script type="module" src="./src/game.js"></script>
+</body>
+</html>

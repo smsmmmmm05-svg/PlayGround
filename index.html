@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f7f1">
+  <meta name="description" content="A bright little number puzzle. Slide, merge, and find your flow.">
+  <title>Slide Club — a little number puzzle</title>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/game.js" defer></script>
+</head>
+<body>
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="wordmark" href="/" aria-label="Slide Club home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>slide<span class="wordmark-light">club</span></span>
+      </a>
+      <span class="top-note"><span class="live-dot"></span> YOUR DAILY MOMENT OF CALM</span>
+      <button class="icon-button sound-button" id="sound-toggle" type="button" aria-label="Turn sound on" title="Sound off">
+        <svg class="sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5ZM16 9l5 6m0-6-5 6"/></svg>
+        <svg class="sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5ZM15.5 8.5a5 5 0 0 1 0 7m3-10a9 9 0 0 1 0 13"/></svg>
+      </button>
+    </header>
+
+    <section class="game-layout" aria-label="2048 puzzle game">
+      <div class="game-main">
+        <div class="intro-row">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-line"></span> THE LITTLE NUMBER GAME</div>
+            <h1>Make room<br>for <span>one more.</span></h1>
+          </div>
+          <div class="intro-sticker" aria-hidden="true"><span>✳</span><small>TAKE<br>IT EASY</small></div>
+        </div>
+
+        <div class="game-toolbar">
+          <div class="stats" aria-label="Game statistics">
+            <div class="stat-card score-card"><span class="stat-label">SCORE</span><strong id="score">0</strong><span class="score-pop" id="score-pop" aria-hidden="true"></span></div>
+            <div class="stat-card best-card"><span class="stat-label">BEST</span><strong id="best">0</strong></div>
+            <div class="stat-card time-card"><span class="stat-label">TIME</span><strong id="time">00:00</strong></div>
+          </div>
+          <div class="actions">
+            <button class="action-button undo-button" id="undo-button" type="button" disabled><span aria-hidden="true">↶</span> Undo</button>
+            <button class="action-button restart-button" id="restart-button" type="button"><span aria-hidden="true">↻</span> New game</button>
+          </div>
+        </div>
+
+        <div class="board-wrap">
+          <div class="board" id="board" role="grid" aria-label="2048 game board. Use arrow keys or swipe to move tiles." tabindex="0">
+            <div class="board-grid" aria-hidden="true"></div>
+            <div class="tiles" id="tiles" role="presentation"></div>
+            <div class="board-overlay" id="board-overlay" hidden>
+              <div class="overlay-card">
+                <span class="overlay-spark" aria-hidden="true">✳</span>
+                <h2 id="overlay-title">Lovely work!</h2>
+                <p id="overlay-message">You made it to 2048.</p>
+                <div class="overlay-actions" id="overlay-actions"></div>
+              </div>
+            </div>
+          </div>
+          <div class="board-foot"><span><span class="keyboard-key">←</span><span class="keyboard-key">↑</span><span class="keyboard-key">↓</span><span class="keyboard-key">→</span> TO MOVE</span><span>OR JUST SWIPE <span class="swipe-symbol" aria-hidden="true">↗</span></span></div>
+        </div>
+
+        <div class="how-to"><span class="how-icon" aria-hidden="true">✦</span><p><strong>A tiny tip</strong> — Join matching numbers to make a bigger one. Can you reach <b>2048?</b></p></div>
+      </div>
+
+      <aside class="side-panel" aria-label="Game guide">
+        <div class="side-orbit orbit-one" aria-hidden="true">✳</div>
+        <div class="side-orbit orbit-two" aria-hidden="true">·</div>
+        <div class="side-content">
+          <span class="side-kicker">A GOOD LITTLE CHALLENGE</span>
+          <h2>One move<br>at a time.</h2>
+          <p>Slide the tiles around. When two of the same number meet, they become one.</p>
+          <div class="rule-list">
+            <div class="rule"><span class="rule-number">01</span><span>Pick a direction</span><span class="rule-arrow">↗</span></div>
+            <div class="rule"><span class="rule-number">02</span><span>Match the numbers</span><span class="rule-arrow">＋</span></div>
+            <div class="rule"><span class="rule-number">03</span><span>Keep a little space</span><span class="rule-arrow">✳</span></div>
+          </div>
+          <div class="side-note"><span aria-hidden="true">☻</span> No rush. Your timer starts when you do.</div>
+        </div>
+        <div class="side-bottom"><span>SLIDE CLUB</span><span>EST. ONE MORE MOVE</span></div>
+      </aside>
+    </section>
+    <footer class="footer"><span>MADE FOR A LITTLE MENTAL WANDER</span><span>TAKE A BREATH. TAKE A TURN.</span></footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

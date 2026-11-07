@@ -1,0 +1,13 @@
+{
+  "name": "Slide Club — a little number puzzle",
+  "short_name": "Slide Club",
+  "description": "A bright little number puzzle. Slide, merge, and find your flow.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f7f1",
+  "theme_color": "#f6f7f1",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

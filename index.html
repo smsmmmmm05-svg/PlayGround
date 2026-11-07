@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#073b59">
+  <meta name="description" content="A tiny fish, a big ocean. Swim, snack, and grow in this cozy arcade game.">
+  <title>Tiny Tide — Ocean Arcade</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-shell" aria-label="Tiny Tide ocean arcade game">
+    <canvas id="ocean" aria-label="Ocean game area"></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Tiny Tide home" onclick="return false">
+        <span class="brand-mark">✦</span><span>TINY<span class="brand-light">TIDE</span></span>
+      </a>
+      <div class="hud">
+        <div class="stat score-stat"><span class="stat-icon">✧</span><span><small>SCORE</small><strong id="score">000</strong></span></div>
+        <div class="stat timer-stat"><span class="timer-ring"><span id="timer-icon">◷</span></span><span><small>TIME</small><strong id="timer">60</strong></span></div>
+        <div class="stat best-stat"><span class="stat-icon">♛</span><span><small>BEST</small><strong id="best">000</strong></span></div>
+      </div>
+    </header>
+
+    <div class="growth-card" aria-live="polite">
+      <div class="growth-label"><span>GROWTH</span><span id="growth-count">0 / 5</span></div>
+      <div class="growth-track"><span id="growth-fill"></span></div>
+    </div>
+
+    <button class="sound-button" id="sound-button" aria-label="Toggle sound" title="Sound on/off"><span id="sound-icon">♫</span></button>
+    <div class="level-label"><span class="level-dot"></span><span id="size-label">LITTLE GUPPY</span></div>
+
+    <section class="screen welcome-screen" id="welcome-screen" aria-labelledby="welcome-title">
+      <div class="welcome-card">
+        <div class="eyebrow"><span></span> A LITTLE OCEAN ADVENTURE <span></span></div>
+        <h1 id="welcome-title">Make a <em>little</em><br>big splash.</h1>
+        <p>Swim, snack, and grow your way through the blue.</p>
+        <div class="how-to"><span class="touch-icon"><i></i></span><span><b>Touch &amp; drift</b><small>Guide your fish with your finger</small></span><span class="sparkle">✦</span></div>
+        <button class="primary-button" id="start-button"><span>LET'S SWIM</span><span class="button-arrow">→</span></button>
+        <div class="safety-note"><span class="safe-dot"></span> Little fish = snack&nbsp; · &nbsp;Big fish = swim away</div>
+      </div>
+      <div class="floaty floaty-one">✦</div><div class="floaty floaty-two">✧</div>
+    </section>
+
+    <section class="screen end-screen hidden" id="end-screen" aria-labelledby="end-title">
+      <div class="welcome-card end-card">
+        <div class="end-medal" id="end-medal">✦</div>
+        <div class="eyebrow" id="end-eyebrow">WHAT A SWIM!</div>
+        <h2 id="end-title">Ocean<br><em>adventurer.</em></h2>
+        <p id="end-message">The tide is calling you back.</p>
+        <div class="result-row"><div><small>YOUR SCORE</small><strong id="final-score">000</strong></div><div class="result-divider"></div><div><small>BEST SWIM</small><strong id="final-best">000</strong></div></div>
+        <button class="primary-button" id="restart-button"><span>SWIM AGAIN</span><span class="button-arrow">↻</span></button>
+      </div>
+    </section>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">BIGGER &amp; BRIGHTER! <span>✦</span></div>
+    <div class="bottom-hint" id="bottom-hint"><span class="hint-hand">✋</span> DRAG ANYWHERE TO SWIM <span class="hint-line"></span></div>
+    <div class="corner-note">A TINY TIDE OF JOY <span>✦</span></div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>

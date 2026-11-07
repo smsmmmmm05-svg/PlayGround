@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f3ec">
+  <title>Little Pieces — Sliding Puzzle</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+    :root{--ink:#20352d;--muted:#758078;--paper:#f6f3ec;--white:#fffefa;--green:#31644e;--lime:#d8e879;--line:#e6e2d9;--shadow:0 18px 50px #26382c12;--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif}
+    *{box-sizing:border-box}html{min-height:100%;background:var(--paper)}body{margin:0;color:var(--ink);font-family:var(--sans);min-height:100vh;background:radial-gradient(ellipse at 18% 0%,#e9eddc 0,transparent 35%),var(--paper)}button{font:inherit;color:inherit}button:focus-visible{outline:3px solid #7d9d59;outline-offset:3px}.app{max-width:1120px;padding:24px 44px 40px;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}.brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-.04em;font-size:19px}.brand-mark{width:37px;height:37px;border-radius:12px;background:var(--green);display:grid;place-items:center;color:#e4edbb;font-size:20px;box-shadow:0 5px 12px #31644e30}.top-note{color:var(--muted);font-size:12px;font-weight:600;letter-spacing:.11em;text-transform:uppercase}.layout{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(340px,.88fr);gap:clamp(34px,6vw,78px);align-items:center}.eyebrow{display:flex;gap:9px;align-items:center;color:var(--green);font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;margin-bottom:14px}.eyebrow:before{content:'';width:22px;height:1px;background:#95a77e}.intro h1{font:600 clamp(38px,5.2vw,64px)/1.07 var(--serif);letter-spacing:-.045em;margin:0 0 15px;max-width:440px}.intro h1 em{font-weight:600;color:#79905b}.intro p{font-size:15px;line-height:1.75;color:#738078;max-width:390px;margin:0 0 28px}.game{max-width:445px}.stats{display:grid;grid-template-columns:repeat(3,1fr);background:var(--white);border:1px solid var(--line);border-radius:16px;margin-bottom:13px;padding:13px 10px;box-shadow:0 4px 14px #2c38270a}.stat{text-align:center;border-right:1px solid var(--line)}.stat:last-child{border:0}.stat-label{font-size:10px;font-weight:700;color:#889188;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}.stat-value{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.03em}.board-wrap{position:relative;padding:9px;background:var(--white);border-radius:23px;border:1px solid #e8e4da;box-shadow:var(--shadow);touch-action:none;user-select:none;-webkit-user-select:none}.board{display:grid;aspect-ratio:1;width:100%;gap:5px;border-radius:16px;overflow:hidden;background:#d6dac8}.tile{position:relative;border:0;border-radius:4px;padding:0;cursor:pointer;background-image:url('assets/puzzle-art.svg');background-repeat:no-repeat;transition:filter .15s,transform .15s;touch-action:none}.tile:after{content:'';position:absolute;inset:0;border:1px solid #ffffff30;border-radius:4px;pointer-events:none}.tile:hover{filter:brightness(1.09);z-index:1}.tile:active{transform:scale(.965)}.tile:focus-visible{z-index:2}.empty{background:#e8e9df;border-radius:4px;position:relative}.empty:after{content:'·';position:absolute;inset:0;display:grid;place-items:center;color:#abb3a0;font-size:30px;font-weight:500}.board.solved .empty{background-image:url('assets/puzzle-art.svg');background-size:100% 100%;border-radius:4px}.board.solved .empty:after{display:none}.under-board{display:flex;align-items:center;justify-content:space-between;margin-top:16px}.difficulty{display:flex;align-items:center;gap:8px}.difficulty-label{color:#869087;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:10px;margin-right:2px}.size-button{border:1px solid transparent;background:transparent;color:#899188;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer}.size-button.active{background:#e5eadc;color:var(--green);border-color:#dbe4ce}.actions{display:flex;gap:8px}.action{display:flex;align-items:center;gap:7px;padding:10px 13px;border-radius:11px;border:1px solid #e1ddd3;background:var(--white);font-size:12px;font-weight:700;cursor:pointer;transition:transform .15s,background .15s}.action:hover{background:#f0f0e9;transform:translateY(-1px)}.action.primary{background:var(--green);color:white;border-color:var(--green)}.action.primary:hover{background:#244f3c}.action svg{width:14px;height:14px}.hint{display:flex;align-items:center;justify-content:center;gap:8px;color:#919990;font-size:11px;margin-top:14px}.hint kbd{font:inherit;color:#657466;background:#eeede5;border-radius:5px;padding:3px 6px}.preview{display:flex;gap:12px;align-items:center;margin-top:21px;padding:12px 14px;background:#eeece3;border-radius:14px}.preview img{width:49px;height:49px;object-fit:cover;border-radius:9px}.preview-copy{flex:1}.preview-title{font-size:12px;font-weight:700}.preview-subtitle{font-size:11px;color:#818a80;margin-top:3px}.preview-tag{font-size:10px;color:#62744f;background:#e1e8d2;padding:6px 8px;border-radius:7px;font-weight:700}.win-toast{position:absolute;inset:9px;border-radius:16px;background:#20352ddf;color:white;display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;backdrop-filter:blur(4px);z-index:4}.win-toast.show{display:flex}.win-toast .confetti{font-size:30px;margin-bottom:9px}.win-toast strong{font:600 28px var(--serif)}.win-toast span{font-size:12px;color:#e4e9dc;margin-top:7px}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:#20352d;color:white;padding:11px 16px;border-radius:10px;font-size:13px;opacity:0;transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:780px){.app{padding:18px 22px 30px}.topbar{margin-bottom:20px}.layout{grid-template-columns:1fr;gap:25px}.intro{max-width:520px}.intro h1{font-size:clamp(39px,9vw,54px);max-width:450px}.intro p{margin-bottom:0}.game{width:100%;max-width:500px;margin:0 auto}.top-note{font-size:10px}.preview{margin-top:16px}}
+    @media(max-width:430px){.app{padding:14px 15px calc(8px + env(safe-area-inset-bottom))}.topbar{margin-bottom:14px}.brand{font-size:17px}.brand-mark{width:33px;height:33px}.top-note{font-size:9px;letter-spacing:.08em}.layout{gap:14px}.intro h1{font-size:39px;margin-bottom:8px}.intro p{font-size:13px;line-height:1.55}.stats{margin-bottom:10px;padding:10px 7px;border-radius:13px}.stat-label{font-size:9px}.stat-value{font-size:17px}.board-wrap{padding:7px;border-radius:19px}.board{gap:4px;border-radius:13px}.under-board{margin-top:12px;gap:8px}.difficulty{gap:3px}.difficulty-label{font-size:9px;margin-right:0}.size-button{font-size:11px;padding:7px 8px}.actions{gap:6px}.action{padding:9px 10px;font-size:11px;gap:5px}.hint{margin-top:11px;font-size:10px}.preview{padding:10px 12px;margin-top:12px}.preview img{width:43px;height:43px}}
+    @media(max-width:360px){.app{padding-inline:11px}.actions .action{padding-inline:8px}.difficulty-label{display:none}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true">✳</span> little pieces</div><div class="top-note">A little pause for your day</div></header>
+    <div class="layout">
+      <section class="intro" aria-labelledby="page-title"><div class="eyebrow">The daily daydream</div><h1 id="page-title">A picture,<br>in <em>pieces.</em></h1><p>Slide the little squares back into place. A quiet moment, one piece at a time.</p>
+        <div class="preview"><img src="assets/puzzle-art.svg" alt="The finished sunset over a mountain lake"><div class="preview-copy"><div class="preview-title">Golden hour, somewhere</div><div class="preview-subtitle">Your picture to put back together</div></div><div class="preview-tag">TODAY'S SCENE</div></div>
+      </section>
+      <section class="game" aria-label="Sliding image puzzle">
+        <div class="stats" aria-live="polite"><div class="stat"><div class="stat-label">Time</div><div class="stat-value" id="timer">00:00</div></div><div class="stat"><div class="stat-label">Moves</div><div class="stat-value" id="moves">0</div></div><div class="stat"><div class="stat-label">Best</div><div class="stat-value" id="best">—</div></div></div>
+        <div class="board-wrap"><div class="board" id="board" role="group" aria-label="3 by 3 sliding puzzle"></div><div class="win-toast" id="winToast" role="status"><div class="confetti">✦</div><strong>Beautifully done.</strong><span id="winSummary">You found every piece.</span></div></div>
+        <div class="under-board"><div class="difficulty" aria-label="Puzzle size"><span class="difficulty-label">Grid</span><button class="size-button active" data-size="3" aria-pressed="true">3 × 3</button><button class="size-button" data-size="4" aria-pressed="false">4 × 4</button></div><div class="actions"><button class="action" id="resetButton" aria-label="Reset to this scramble"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.3 8a6.8 6.8 0 1 1 .3 4.5M3 3.8v4.5h4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Reset</button><button class="action primary" id="newButton"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3v14M3 10h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>New game</button></div></div>
+        <div class="hint"><span>Tap a tile next to the empty space</span><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd><span>also work</span></div>
+      </section>
+    </div>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    (() => {
+      const boardEl = document.getElementById('board');
+      const timerEl = document.getElementById('timer');
+      const movesEl = document.getElementById('moves');
+      const bestEl = document.getElementById('best');
+      const winToast = document.getElementById('winToast');
+      const winSummary = document.getElementById('winSummary');
+      const toastEl = document.getElementById('toast');
+      const bestKey = 'little-pieces-best-';
+      let size = 3, tiles = [], initialTiles = [], moves = 0, seconds = 0, timer = null, started = false, won = false, toastTimer;
+
+      const formatTime = value => `${String(Math.floor(value / 60)).padStart(2, '0')}:${String(value % 60).padStart(2, '0')}`;
+      function updateBest() {
+        const best = Number(localStorage.getItem(bestKey + size));
+        bestEl.textContent = best ? formatTime(best) : '—';
+      }
+      function updateStats() { timerEl.textContent = formatTime(seconds); movesEl.textContent = moves; }
+      function stopTimer() { if (timer) clearInterval(timer); timer = null; }
+      function startTimer() {
+        if (started) return;
+        started = true;
+        timer = setInterval(() => { seconds++; timerEl.textContent = formatTime(seconds); }, 1000);
+      }
+      function neighbors(index) {
+        const row = Math.floor(index / size), col = index % size;
+        return [row > 0 ? index - size : -1, row < size - 1 ? index + size : -1, col > 0 ? index - 1 : -1, col < size - 1 ? index + 1 : -1].filter(i => i >= 0);
+      }
+      function shuffle() {
+        const total = size * size;
+        tiles = Array.from({length: total}, (_, i) => i);
+        let empty = total - 1, previous = -1;
+        // A random walk from the solved state always produces a solvable puzzle.
+        for (let step = 0; step < size * size * 24; step++) {
+          const choices = neighbors(empty).filter(i => i !== previous);
+          const next = choices[Math.floor(Math.random() * choices.length)];
+          [tiles[empty], tiles[next]] = [tiles[next], tiles[empty]];
+          previous = empty;
+          empty = next;
+        }
+        if (tiles.every((tile, i) => tile === i)) {
+          const next = neighbors(empty)[0];
+          [tiles[empty], tiles[next]] = [tiles[next], tiles[empty]];
+        }
+        initialTiles = [...tiles];
+        moves = 0; seconds = 0; started = false; won = false;
+        stopTimer(); winToast.classList.remove('show'); updateStats(); render();
+      }
+      function render() {
+        boardEl.style.gridTemplateColumns = `repeat(${size},1fr)`;
+        boardEl.setAttribute('aria-label', `${size} by ${size} sliding puzzle`);
+        boardEl.classList.toggle('solved', won);
+        boardEl.replaceChildren();
+        tiles.forEach((value, index) => {
+          if (value === size * size - 1 && !won) {
+            const empty = document.createElement('div'); empty.className = 'empty'; empty.setAttribute('aria-label', 'Empty space'); empty.setAttribute('aria-hidden', 'true'); boardEl.append(empty); return;
+          }
+          const tile = document.createElement('button');
+          tile.className = 'tile'; tile.type = 'button';
+          tile.setAttribute('aria-label', `Tile ${value + 1}${neighbors(index).includes(tiles.indexOf(size * size - 1)) ? ', can slide' : ''}`);
+          tile.style.backgroundSize = `${size * 100}% ${size * 100}%`;
+          const x = value % size, y = Math.floor(value / size);
+          tile.style.backgroundPosition = `${size === 1 ? 0 : x / (size - 1) * 100}% ${size === 1 ? 0 : y / (size - 1) * 100}%`;
+          tile.addEventListener('click', () => move(index));
+          tile.addEventListener('pointerdown', event => { tile.dataset.startX = event.clientX; tile.dataset.startY = event.clientY; });
+          tile.addEventListener('pointerup', event => {
+            const dx = event.clientX - Number(tile.dataset.startX), dy = event.clientY - Number(tile.dataset.startY);
+            if (Math.hypot(dx, dy) > 24) { event.preventDefault(); const emptyIndex = tiles.indexOf(size * size - 1); if (neighbors(index).includes(emptyIndex)) move(index); }
+          });
+          boardEl.append(tile);
+        });
+      }
+      function move(index) {
+        if (won) return;
+        const empty = tiles.indexOf(size * size - 1);
+        if (!neighbors(index).includes(empty)) return;
+        startTimer(); [tiles[index], tiles[empty]] = [tiles[empty], tiles[index]];
+        moves++; updateStats();
+        if (tiles.every((tile, i) => tile === i)) finish();
+        render();
+      }
+      function finish() {
+        won = true; stopTimer();
+        const key = bestKey + size, best = Number(localStorage.getItem(key));
+        if (!best || seconds < best) localStorage.setItem(key, seconds);
+        updateBest(); winSummary.textContent = `Solved in ${moves} moves · ${formatTime(seconds)}`;
+        winToast.classList.add('show');
+      }
+      function resetPuzzle() {
+        tiles = [...initialTiles]; moves = 0; seconds = 0; started = false; won = false;
+        stopTimer(); winToast.classList.remove('show'); updateStats(); render();
+      }
+      function showToast(message) {
+        toastEl.textContent = message; toastEl.classList.add('show'); clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1700);
+      }
+      function changeSize(nextSize) {
+        if (size === nextSize) return;
+        size = nextSize;
+        document.querySelectorAll('.size-button').forEach(button => {
+          const active = Number(button.dataset.size) === size;
+          button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active));
+        });
+        updateBest(); shuffle();
+      }
+      document.getElementById('newButton').addEventListener('click', () => { shuffle(); showToast('A fresh scramble, just for you.'); });
+      document.getElementById('resetButton').addEventListener('click', () => {
+        resetPuzzle(); showToast('Back to the beginning.');
+      });
+      document.querySelectorAll('.size-button').forEach(button => button.addEventListener('click', () => changeSize(Number(button.dataset.size))));
+      document.addEventListener('keydown', event => {
+        const keyDirections = {ArrowUp: size, ArrowDown: -size, ArrowLeft: 1, ArrowRight: -1};
+        if (!(event.key in keyDirections)) return;
+        event.preventDefault();
+        const empty = tiles.indexOf(size * size - 1), candidate = empty + keyDirections[event.key];
+        if (candidate >= 0 && candidate < tiles.length && neighbors(empty).includes(candidate)) move(candidate);
+      });
+      updateBest(); shuffle();
+    })();
+  </script>
+</body>
+</html>
